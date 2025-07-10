@@ -1,6 +1,7 @@
 package com.sam.mybatis.demomybatisplus;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sam.mybatis.demomybatisplus.mapper.UserMapper;
@@ -20,8 +21,49 @@ class DemoMybatisPlusApplicationTests {
 
     @Test
     void updateUserByEmailTest(){
-        boolean count = userService.updateEmailById();
-        System.out.println(count);
+        //boolean count = userService.updateEmailById();
+        //System.out.println(count);
+
+        // 写法一：使用 LambdaUpdateWrapper (非链式)
+//        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+//        updateWrapper.eq(User::getId,1).set(User::getEmail,"test");
+//        boolean update = userService.update(updateWrapper);
+//        System.out.println(update);
+
+        User user = new User();
+        user.setEmail("zhangsan");
+
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId,1);
+
+        userService.update(user,updateWrapper);
+    }
+
+    @Test
+    void updateUserByEmailTest1(){
+        //boolean count = userService.updateEmailById();
+        //System.out.println(count);
+
+         // 写法一：使用 LambdaUpdateWrapper (非链式)
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId,1).set(User::getEmail,"test");
+        boolean update = userService.update(updateWrapper);
+        System.out.println(update);
+
+    }
+
+    @Test
+    void updateUserByEmailTest2(){
+        //boolean count = userService.updateEmailById();
+        //System.out.println(count);
+
+        User user = new User();
+        user.setEmail("zhangsan");
+
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId,1);
+
+        userService.update(user,updateWrapper);
     }
 
     @Test
