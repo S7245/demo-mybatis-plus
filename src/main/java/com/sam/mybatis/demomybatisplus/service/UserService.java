@@ -9,5 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-07-10 13:16:00
 */
 public interface UserService extends IService<User> {
+    // 查询处岁数大于10岁的总数
+    public  Long countUsersAboveAge10();
 
+    public boolean updateEmailById();
 }

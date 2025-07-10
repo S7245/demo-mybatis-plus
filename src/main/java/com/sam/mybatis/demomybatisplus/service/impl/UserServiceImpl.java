@@ -15,6 +15,19 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
+    @Override
+    public Long countUsersAboveAge10() {
+        return this.lambdaQuery().gt(User::getAge, 10).count();
+    }
+
+    @Override
+    public boolean updateEmailById() {
+        User user = new User();
+        user.setEmail("new@mai.com");
+
+        return this.lambdaUpdate().set(User::getEmail, user.getEmail()).eq(User::getId,1).update();
+        //return this.lambdaUpdate().set();
+    }
 }
 
 

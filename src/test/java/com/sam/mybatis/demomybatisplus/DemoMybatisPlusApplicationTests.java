@@ -1,5 +1,6 @@
 package com.sam.mybatis.demomybatisplus;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sam.mybatis.demomybatisplus.mapper.UserMapper;
@@ -16,6 +17,34 @@ class DemoMybatisPlusApplicationTests {
 
     @Autowired
     private UserService userService;
+
+    @Test
+    void updateUserByEmailTest(){
+        boolean count = userService.updateEmailById();
+        System.out.println(count);
+    }
+
+    @Test
+    void countUsersAboveAge10Test(){
+        long count = userService.countUsersAboveAge10();
+        System.out.println(count);
+    }
+
+    @Test
+    void countQueryWrapper(){
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.gt(User::getAge,10);
+
+        long count = userService.count(queryWrapper);
+        System.out.println(count);
+    }
+
+    @Test
+    void countTest(){
+        // 查询用户表中的总记录数
+        long totalUsers = userService.count(); // 调用 count 方法
+        System.out.println("Total users: " + totalUsers);
+    }
 
 
 
