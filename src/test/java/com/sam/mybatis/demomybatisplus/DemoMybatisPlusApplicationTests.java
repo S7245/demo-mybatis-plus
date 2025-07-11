@@ -40,15 +40,6 @@ class DemoMybatisPlusApplicationTests {
 
     @Test
     void updateUserByEmailTest(){
-        //boolean count = userService.updateEmailById();
-        //System.out.println(count);
-
-        // 写法一：使用 LambdaUpdateWrapper (非链式)
-//        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
-//        updateWrapper.eq(User::getId,1).set(User::getEmail,"test");
-//        boolean update = userService.update(updateWrapper);
-//        System.out.println(update);
-
         User user = new User();
         user.setEmail("zhangsan");
 
@@ -60,9 +51,6 @@ class DemoMybatisPlusApplicationTests {
 
     @Test
     void updateUserByEmailTest1(){
-        //boolean count = userService.updateEmailById();
-        //System.out.println(count);
-
          // 写法一：使用 LambdaUpdateWrapper (非链式)
         LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(User::getId,1).set(User::getEmail,"test");
@@ -73,9 +61,6 @@ class DemoMybatisPlusApplicationTests {
 
     @Test
     void updateUserByEmailTest2(){
-        //boolean count = userService.updateEmailById();
-        //System.out.println(count);
-
         User user = new User();
         user.setEmail("zhangsan");
 
