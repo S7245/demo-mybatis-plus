@@ -1,6 +1,7 @@
 package com.sam.mybatis.demomybatisplus;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -18,8 +19,36 @@ import java.util.Map;
 @SpringBootTest
 class DemoMybatisPlusApplicationTests {
 
+
     @Autowired
     private UserService userService;
+
+    @Test
+    void havingTest(){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .select(
+                        "ANY_VALUE(id) AS id",
+                        "ANY_VALUE(name) AS name",
+                        "age",
+                        "ANY_VALUE(email) AS email",
+                        "SUM(age) AS totalAge"  // 可选聚合字段
+                )
+                .groupBy("age")
+                .having("SUM(age) > {0}", 10);
+
+        // 结果映射到DTO
+        List<Map<String, Object>> result = userService.listMaps(queryWrapper);
+
+        result.forEach(map ->
+                System.out.println(
+                        "年龄组: " + map.get("age") +
+                                " | 总年龄: " + map.get("totalAge") +
+                                " | 代表用户: " + map.get("name")
+                )
+        );
+    }
 
     @Test
     void testSimpleQuery(){
