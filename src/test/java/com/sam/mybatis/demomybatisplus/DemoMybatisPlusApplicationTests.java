@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.SimpleQuery;
 import com.sam.mybatis.demomybatisplus.mapper.UserMapper;
 import com.sam.mybatis.demomybatisplus.pojo.User;
 import com.sam.mybatis.demomybatisplus.service.UserService;
@@ -12,12 +13,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class DemoMybatisPlusApplicationTests {
 
     @Autowired
     private UserService userService;
+
+    @Test
+    void testSimpleQuery(){
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.gt(User::getAge,10);
+        Map<Object, Object> userMap = SimpleQuery.map(
+                queryWrapper,
+                User::getName, // key
+                User::getAge, // value
+                user -> System.out.println(user.getName())
+
+        );
+        // 遍历结果
+        for (Map.Entry<Object, Object> entry : userMap.entrySet()) {
+            System.out.println("Username: " + entry.getKey() + ", Age: " + entry.getValue());
+        }
+    }
 
     @Test
     void updateUserByEmailTest(){
